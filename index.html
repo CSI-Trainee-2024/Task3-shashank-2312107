@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINESWEEPER</title>
+    <style>
+        #game{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+         .grid{
+            margin-top: 7%;
+           /* width: 100%; */
+            display: grid;
+            grid-template-columns: repeat(8,4rem);
+            padding: 60px 40px;
+        }
+        .box{
+            width: 60px;
+            height: 60px;
+            background-color: skyblue;
+            border: solid black 2px;
+            border-radius: 5px;
+            gap: 0px;
+        }
+        @media(max-width:600px){
+            .grid{
+                width: 400px;
+                padding: 2rem;
+                text-align: center;
+            }
+            .box{
+                width: 30px;
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="game">
+    <div class="grid"></div>
+</section>
+    <script>
+        const grid =document.querySelector('.grid');
+         for(i=0;i<64;i++){
+            const cell=document.createElement('div');
+            cell.classList.add('box');
+            cell.addEventListener('click',checkbomb)
+            grid.append(cell);
+         }
+    </script>
+</body>
+</html>
