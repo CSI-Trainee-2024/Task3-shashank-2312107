@@ -77,41 +77,49 @@
     <script>
         const grid = document.querySelector('.grid');
         const scoreDisplay = document.getElementById('score');
+        const restartButton = document.getElementById('restart');
         let count = 0; 
         let gameOver = false; 
+        let box = [];
 
-        // Create blocks
-        for (let i = 0; i < 80; i++) {
-            const cell = document.createElement('div');
-            cell.classList.add('box');
-            cell.addEventListener('click', checkBomb);
-            grid.appendChild(cell);
-        }
+       
+        function initGame() {
+            grid.innerHTML = ''; 
+            count = 0; 
+            gameOver = false; 
+            scoreDisplay.textContent = `Safe Clicks: ${count}`; 
+            box = [];
 
-        let box = Array.from(document.querySelectorAll('.box'));
-        for (let i = 0; i < 30; i++) {
-            let randomIndex = Math.floor(Math.random() * 80);
-            while (box[randomIndex].value === 'bomb') {
-                randomIndex = Math.floor(Math.random() * 80);
+            for (let i = 0; i < 80; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('box');
+                cell.addEventListener('click', checkBomb);
+                grid.appendChild(cell);
+                box.push(cell); 
             }
-            box[randomIndex].innerHTML = '<span id="bomb" class="bomb">💣</span>';
-            box[randomIndex].value = 'bomb';
+            for (let i = 0; i < 30; i++) {
+                let randomIndex = Math.floor(Math.random() * 80);
+                while (box[randomIndex].value === 'bomb') {
+                    randomIndex = Math.floor(Math.random() * 80);
+                }
+                box[randomIndex].innerHTML = '<span id="bomb" class="bomb">💣</span>';
+                box[randomIndex].value = 'bomb';
+            }
         }
-
-        let bomb = Array.from(document.querySelectorAll('#bomb'));
-
+        initGame();
         function checkBomb() {
             if (gameOver) return;
             
             if (this.value === "bomb") {
                 gameOver = true; 
                 console.log('Game Over');
-                for (let i = 0; i < bomb.length; i++) {
-                    bomb[i].style.opacity = 1;
+                const bombs = document.querySelectorAll('#bomb');
+                for (let i = 0; i < bombs.length; i++) {
+                    bombs[i].style.opacity = 1;
                     setTimeout(() => {
-                        bomb[i].classList.add('rotate');
+                        bombs[i].classList.add('rotate');
                         setTimeout(() => {
-                            bomb[i].classList.add('active');
+                            bombs[i].classList.add('active');
                         }, 1600);
                     }, 200);
                 }
