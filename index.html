@@ -6,14 +6,14 @@
     <title>MINESWEEPER</title>
     <style>
         #game {
-            margin-top: 10%;
+            margin-top: 4%;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
         .grid {
-            margin-top: 7%;
+            margin-top: 3%;
             display: grid;
             grid-template-columns: repeat(10, 4rem);
             padding: 60px 40px;
@@ -21,7 +21,7 @@
         .box {
             width: 60px;
             height: 60px;
-            background-color: skyblue;
+            background-color: rgb(149, 98, 183);
             border: solid black 2px;
             border-radius: 5px;
             font-size: 2.2rem;
@@ -32,6 +32,12 @@
             align-items: center;
             font-size: 2.2rem;
             opacity: 0;
+        }
+        #restart {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
         .bomb.rotate {
             animation: rotate 1s linear infinite;
@@ -66,13 +72,16 @@
     <section id="game">
         <div id="score">Safe Clicks: 0</div>
         <div class="grid"></div>
+        <button id="restart">Restart</button>
     </section>
     <script>
         const grid = document.querySelector('.grid');
         const scoreDisplay = document.getElementById('score');
-        let count = 0; //we are using this count for scoreDisplay.
+        let count = 0; 
+        let gameOver = false; 
 
-        for(let i = 0; i < 80; i++) {
+        // Create blocks
+        for (let i = 0; i < 80; i++) {
             const cell = document.createElement('div');
             cell.classList.add('box');
             cell.addEventListener('click', checkBomb);
@@ -80,10 +89,10 @@
         }
 
         let box = Array.from(document.querySelectorAll('.box'));
-        for(let i = 0; i < 30; i++) {
+        for (let i = 0; i < 30; i++) {
             let randomIndex = Math.floor(Math.random() * 80);
             while (box[randomIndex].value === 'bomb') {
-                randomIndex = Math.floor(Math.random() * 80); 
+                randomIndex = Math.floor(Math.random() * 80);
             }
             box[randomIndex].innerHTML = '<span id="bomb" class="bomb">💣</span>';
             box[randomIndex].value = 'bomb';
@@ -92,9 +101,12 @@
         let bomb = Array.from(document.querySelectorAll('#bomb'));
 
         function checkBomb() {
+            if (gameOver) return;
+            
             if (this.value === "bomb") {
+                gameOver = true; 
                 console.log('Game Over');
-                for(let i = 0; i < bomb.length; i++) {
+                for (let i = 0; i < bomb.length; i++) {
                     bomb[i].style.opacity = 1;
                     setTimeout(() => {
                         bomb[i].classList.add('rotate');
@@ -108,6 +120,9 @@
                         box[i].style.backgroundColor = "rgb(243, 29, 29)";
                     }
                 }
+                setTimeout(() => {
+                    alert("You clicked a bomb! Game Over!");
+                }, 400);
             } else {
                 this.style.backgroundColor = 'rgb(214, 214, 214)';
                 this.innerHTML = "🤥";
@@ -120,12 +135,14 @@
         }
 
         function checkWinner() {
-            if (count === (box.length - 30)) { 
+            if (count === (box.length - 30)) {
+                gameOver = true; 
                 setTimeout(() => {
                     alert("You win!");
-                }, 300);
+                }, 300); 
             }
         }
+        restartButton.addEventListener('click', initGame);
     </script>
 </body>
 </html>
