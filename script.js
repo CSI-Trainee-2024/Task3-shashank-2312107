@@ -54,7 +54,7 @@ function checkBomb() {
             }
         }
         setTimeout(() => {
-            alert("You clicked a bomb! Game Over!");
+            alert("You clicked a bomb! so Game Over!");
         }, 400);
     } else {
         this.style.backgroundColor = 'rgb(214, 214, 214)';
