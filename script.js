@@ -1,4 +1,5 @@
 
+        
 const grid = document.querySelector('.grid');
 const scoreDisplay = document.getElementById('score');
 const restartButton = document.getElementById('restart');
@@ -14,17 +15,17 @@ function initGame() {
     scoreDisplay.textContent = `Safe Clicks: ${count}`; 
     box = [];
 
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 36; i++) {
         const cell = document.createElement('div');
         cell.classList.add('box');
         cell.addEventListener('click', checkBomb);
         grid.appendChild(cell);
         box.push(cell); 
     }
-    for (let i = 0; i < 30; i++) {
-        let randomIndex = Math.floor(Math.random() * 80);
+    for (let i = 0; i < 16; i++) {
+        let randomIndex = Math.floor(Math.random() * 36);
         while (box[randomIndex].value === 'bomb') {
-            randomIndex = Math.floor(Math.random() * 80);
+            randomIndex = Math.floor(Math.random() * 36);
         }
         box[randomIndex].innerHTML = '<span id="bomb" class="bomb">💣</span>';
         box[randomIndex].value = 'bomb';
@@ -57,7 +58,7 @@ function checkBomb() {
         }, 400);
     } else {
         this.style.backgroundColor = 'rgb(214, 214, 214)';
-        this.innerHTML = "🤥";
+        this.innerHTML = "💎";
         this.value = 'safe';
         count++;
         scoreDisplay.textContent = `Safe Clicks: ${count}`; 
@@ -67,7 +68,7 @@ function checkBomb() {
 }
 
 function checkWinner() {
-    if (count === (box.length - 30)) {
+    if (count === (box.length - 16)) {
         gameOver = true; 
         setTimeout(() => {
             alert("You win!");
