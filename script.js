@@ -12,7 +12,7 @@ function initGame() {
     grid.innerHTML = ''; 
     count = 0; 
     gameOver = false; 
-    scoreDisplay.textContent = `Safe Clicks: ${count}`; 
+    scoreDisplay.textContent = ` Your Score: ${count}`; 
     box = [];
 
     for (let i = 0; i < 36; i++) {
@@ -54,14 +54,14 @@ function checkBomb() {
             }
         }
         setTimeout(() => {
-            alert("You clicked a bomb! so Game Over!");
+            alert("You clicked a bomb!  Game Over!");
         }, 400);
     } else {
         this.style.backgroundColor = 'rgb(214, 214, 214)';
         this.innerHTML = "💎";
         this.value = 'safe';
         count++;
-        scoreDisplay.textContent = `Safe Clicks: ${count}`; 
+        scoreDisplay.textContent = `Your Score: ${count}`; 
         this.removeEventListener('click', checkBomb);
         checkWinner();
     }
